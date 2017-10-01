@@ -90,7 +90,6 @@ input:focus::-webkit-input-placeholder{
   color: #2c3e50;
   position: relative;
   height: 100vh;
-  overflow: hidden;
   .search
     position: absolute;
     right: 0;
@@ -117,12 +116,11 @@ input:focus::-webkit-input-placeholder{
     left: 0;
     bottom: 0;
     width: 100%;
-    z-index: 500;
     height: 40px
     line-height: 40px
     border-radius: 5px 5px 0 0;
     display:flex
-    background: #00FFC9;
+    background: #8adad0;
     .tab-item
       width:50%
       text-align: center

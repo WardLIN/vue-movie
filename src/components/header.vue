@@ -35,6 +35,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
+@import '../assets/stylus/mixin.styl';
 .header
   position: absolute;
   overflow: hidden;
@@ -42,6 +43,7 @@ export default {
   height: 40px;
   line-height: 40px;
   background: #fff;
+  border-1px(#ccc);
   .theme
     float:left;
     font-weight: bold;

@@ -3,6 +3,7 @@
     <div class="search-box">
       <h1>{{res.title}}</h1>
       <div class="resList" ref="result">
+        <ul>
         <li v-for="movie in res.subjects" class="item-box" @click="selectMovie(movie.id,$event)">
           <div class="poster">
             <img :src="movie.images.small">
@@ -13,6 +14,7 @@
             <span>{{movie.rating.average}} / {{movie.year}}</span>
           </div>
         </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -84,34 +86,38 @@
     text-align: left;
     h1
       width: 100%;
-      padding: 10px 0 10px 10px;
+      height: 30px;
+      line-height: 30px;
+      padding-left: 10px;
       background: #ccc;
     .resList
       width: 100%;
-      height: calc(100vh - 114px);
-      overflow-y: scroll;
-      .item-box
-        display: flex;
-        margin: 10px 20px;
-        .poster
-          width: 20%;
-          margin-right: 10px;
-          img
-            width: 60px;
-            height: 80px;
-        .mes
-          flex: 1;
+      height: calc(100vh - 110px);
+      overflow: hidden;
+      ul
+        padding-bottom: 10px;
+        .item-box
           display: flex;
-          flex-flow: column nowrap;
-          justify-content: space-around;
-          span
-            width: 80%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          span.movie-title
-            font-family: Helvetica, Arial;
-            font-size: 20px;
-            font-weight: bold;
-            color: #000;
+          margin: 10px 20px;
+          .poster
+            width: 20%;
+            margin-right: 10px;
+            img
+              width: 60px;
+              height: 80px;
+          .mes
+            flex: 1;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-around;
+            span
+              width: 80%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            span.movie-title
+              font-family: Helvetica, Arial;
+              font-size: 20px;
+              font-weight: bold;
+              color: #000;
 </style>

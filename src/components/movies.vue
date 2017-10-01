@@ -4,8 +4,8 @@
       <div class="title">
         <span>{{movies.title}}</span>
       </div>
-      <div class="movie-list">
-        <ul class="movie-box" ref="movieList">
+      <div class="movie-list" ref="movieList">
+        <ul class="movie-box">
           <li v-for="(movie,index) in movies.subjects" class="movie-item" @click="selectMovie(movie.id,$event)">
               <div class="show-box">
                 <div class="img-show">
@@ -94,16 +94,16 @@
       font-weight: bold;
       color: #6B5E5E;
   .movie-list
+    height: calc(100vh - 110px);
     border-radius: 10px;
     border: 1px solid #ccc;
     background: #fff;
+    overflow: hidden;
     .movie-box
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
-      margin: 10px 0 50px 2.5%;
-      height: calc(100vh - 121px);
-      overflow-y: scroll;
+      margin:10px 0;
       .movie-item
         width:30%;
         margin-left: 2.5%;
