@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="search-box">
+    <loading v-if="isLoading"></loading>
+    <div v-if="!isLoading" class="search-box">
       <h1>{{res.title}}</h1>
       <div class="resList" ref="result">
         <ul>
@@ -22,10 +23,12 @@
 
 <script>
   import BScroll from 'better-scroll';
+  import loading from 'components/loading.vue';
 
   export default {
     data() {
       return {
+        isLoading: true,
         res: {
           subjects: [
             {
@@ -50,6 +53,7 @@
         })
         .then(res => {
           _this.res = res.data;
+          _this.isLoading = false;
           _this.$nextTick(() => {
             _this._initScroll();
         });
@@ -70,6 +74,9 @@
         this.id = id;
         this.$router.push('/movie/subject/' + this.id);
       }
+    },
+    components: {
+      loading
     }
   };
 </script>

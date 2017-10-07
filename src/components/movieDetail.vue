@@ -1,60 +1,63 @@
 <template>
   <div>
-    <div class="back">
-      <i class="icon-arrow_lift" @click="back()"><</i>
-    </div>
-    <div class="detail" ref="detail">
-      <div class="contentWrapper">
-        <div class="movie-header">
-          <div class="image-header">
-            <img :src="item.images.large">
-          </div>
-        </div>
-        <div class="movie-content">
-          <h1>{{item.title}}</h1>
-          <!-- 电影信息 -->
-          <div class="movie-message">
-            <span>{{item.year}} <i v-for="tag in item.genres">/ {{tag}} </i></span>
-            <span>原名：{{item.original_title}}</span>
-            <span>上映时间：{{item.year}}(<i v-for="country in item.countries">{{country}}</i>)</span>
-            <span>时长：90分钟</span>
-          </div>
-          <div class="mark">
-            <span>豆瓣评分</span>
-            <span>{{item.rating.average}}</span>
-            <span>{{item.rating.stars}}星</span>
-            <span>{{item.ratings_count}}人</span>
-          </div>
-          <!-- 电影简介 -->
-          <div class="summary">
-            <h2>剧情简介</h2>
-            <div class="summary-content">
-              <p class="contHide" ref="summary">
-                {{item.summary}}
-              </p>
-              <a class="expand" @click="expand()" ref="expand">(展开)</a>
+    <loading v-if="isLoading"></loading>
+    <div v-if="!isLoading">
+      <div class="back">
+        <i class="icon-arrow_lift" @click="back()"><</i>
+      </div>
+      <div class="detail" ref="detail">
+        <div class="contentWrapper">
+          <div class="movie-header">
+            <div class="image-header">
+              <img :src="item.images.large">
             </div>
           </div>
-          <!-- 影人列表  导演排在第一位 -->
-          <div class="actors"> 
-            <h2>影人</h2>
-            <div class="actor-list" ref="actor">
-              <ul class="player-list" ref="player">
-                <li v-for="director in item.directors" class="player">
-                  <a :href="director.alt">
-                    <img :src="director.avatars.medium">
-                    <div>
-                      <span class="name">{{director.name}}</span>
-                    </div>
-                  </a>
-                </li>
-                <li v-for="actor in item.casts" class="player">
-                  <a :href="actor.alt">
-                    <img :src="actor.avatars.medium">
-                    <span class="name">{{actor.name}}</span>  
-                  </a>
-                </li>
-              </ul>
+          <div class="movie-content">
+            <h1>{{item.title}}</h1>
+            <!-- 电影信息 -->
+            <div class="movie-message">
+              <span>{{item.year}} <i v-for="tag in item.genres">/ {{tag}} </i></span>
+              <span>原名：{{item.original_title}}</span>
+              <span>上映时间：{{item.year}}(<i v-for="country in item.countries">{{country}}</i>)</span>
+              <span>时长：90分钟</span>
+            </div>
+            <div class="mark">
+              <span>豆瓣评分</span>
+              <span>{{item.rating.average}}</span>
+              <span>{{item.rating.stars}}星</span>
+              <span>{{item.ratings_count}}人</span>
+            </div>
+            <!-- 电影简介 -->
+            <div class="summary">
+              <h2>剧情简介</h2>
+              <div class="summary-content">
+                <p class="contHide" ref="summary">
+                  {{item.summary}}
+                </p>
+                <a class="expand" @click="expand()" ref="expand">(展开)</a>
+              </div>
+            </div>
+            <!-- 影人列表  导演排在第一位 -->
+            <div class="actors"> 
+              <h2>影人</h2>
+              <div class="actor-list" ref="actor">
+                <ul class="player-list" ref="player">
+                  <li v-for="director in item.directors" class="player">
+                    <a :href="director.alt">
+                      <img :src="director.avatars.medium">
+                      <div>
+                        <span class="name">{{director.name}}</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li v-for="actor in item.casts" class="player">
+                    <a :href="actor.alt">
+                      <img :src="actor.avatars.medium">
+                      <span class="name">{{actor.name}}</span>  
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -65,10 +68,12 @@
 
 <script>
 import BScroll from 'better-scroll';
+import loading from 'components/loading.vue';
 
 export default {
   data() {
     return {
+      isLoading: true,
       item: {
         images: {},
         rating: {},
@@ -110,6 +115,11 @@ export default {
       _this.$axios.get('/api/movie/subject/' + _this.$route.params.id)
       .then(res => {
         _this.item = res.data;
+        _this.isLoading = false;
+        _this.$nextTick(() => {
+          _this._initScroll();
+          _this._initPics();
+        });
       })
       .catch(err => {
         console.log(err);
@@ -153,6 +163,9 @@ export default {
       this._initScroll();
       return false;
     }
+  },
+  components: {
+    loading
   }
 };
 </script>

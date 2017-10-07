@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="movies">
+    <loading v-if="isLoading"></loading>
+    <div v-if="!isLoading" class="movies">
       <div class="title">
         <span>{{movies.title}}</span>
       </div>
@@ -24,10 +25,12 @@
 
 <script>
   import BScroll from 'better-scroll';
+  import loading from 'components/loading.vue';
 
   export default {
     data() {
       return {
+        isLoading: true,
         movies: {
           title: '',
           subjects: [
@@ -52,6 +55,7 @@
           _this.movies = res.data;
           _this.movieTitle = res.data.title;
           _this.subjects = res.data.subjects;
+          _this.isLoading = false;
           _this.$nextTick(() => {
             _this._initScroll();
           });
@@ -73,6 +77,9 @@
         this.id = id;
         this.$router.push('/movie/subject/' + this.id);
       }
+    },
+    components: {
+      loading
     }
   };
 </script>
